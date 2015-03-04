@@ -1,7 +1,7 @@
 package pieces;
 
+import core.Constellation;
 import main.Color;
-import main.Constellation;
 
 public abstract class ChessPiece {
 

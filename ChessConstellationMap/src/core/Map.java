@@ -1,15 +1,19 @@
-package main;
+package core;
 
 import java.util.List;
 
 public class Map {
 
     // ATTRIBUTES
-    private List<Constellation> constellations;
+    private List<String> constellations;
+
+    private Constellation getConstellationById() {
+
+    }
 
     // PUBLIC METHODS
     public void startMapGeneration() {
-	
+
     }
 
     public void pauseMapGeneration() {
