@@ -1,71 +1,61 @@
 package core;
 
-import java.util.HashMap;
-
 import pieces.ChessPiece;
 
 /**
  * @author Andy
  * 
- *         Representation of the chess board in a constellation
+ *         Representation of the chess board within a constellation
  */
 public class Board {
 
+    /**
+     * Default constructor for the first board in the first constellation of the
+     * map<br/>
+     * Fills the board with the starting positions
+     */
     public Board() {
-	this.mapBoardArray();
+	this.board = new ChessPiece[8][8];
     }
 
-    // ATTRIBUTES
+    /**
+     * Generates a copy of an existing board
+     * 
+     * @param board
+     *        : board from which the new board is cloned
+     */
+    public Board(Board board) {
+
+    }
 
     /**
      * Contains and represents the chess board and its pieces
      */
-    private ChessPiece[][] boardArray = new ChessPiece[8][8];
+    private ChessPiece[][] board;
 
     /**
-     * HashMap mapping field names (e.g. "A1", "A2", ...) to {@link #boardArray}
+     * ID of the board<br/>
+     * Two different constellations may point to the same board
      */
-    private HashMap<String, ChessPiece> boardHashMap = new HashMap<String, ChessPiece>();
-
-    /**
-     * Fills {@link #boardHashMap}
-     */
-    private void mapBoardArray() {
-	for (int j = 0; j < 8; j++) {
-	    for (int i = 0; i < 8; i++) {
-		boardHashMap.put(String.valueOf((char) ('A' + i)) + Integer.toString(j + 1),
-			boardArray[i][j]);
-	    }
-	}
-    }
-
-    /**
-     * @param position
-     *        as String
-     * @return ChessPiece element from {@link #boardArray}
-     */
-    public ChessPiece getChessPiece(String position) {
-	return this.boardHashMap.get(position);
-	// TODO what if returned tile is NULL?
-    }
+    private String id;
 
     /**
      * @param line
-     *        of the chess board ({@link #boardArray}) as short
+     *        of the chess board ({@link #board}) as short
      * @param row
-     *        of the chess board ({@link #boardArray}) as short
-     * @return ChessPiece element of {@link #boardArray}
+     *        of the chess board ({@link #board}) as short
+     * @return ChessPiece element of {@link #board}<br/>
+     *         Returns null if there is no chessPiece at that position
      */
-    public ChessPiece getChessPiece(short line, short row) {
-	return this.boardArray[line][row];
+    public ChessPiece getTile(short line, short row) {
+	return this.board[line][row];
 	// TODO what if returned tile is NULL?
     }
 
-    public void addChessPiece(ChessPiece pieceToAdd, String position) {
-	// TODO method logic and comments
-    }
-
-    public void addChessPiece(ChessPiece pieceToAdd, short line, short row) {
-	// TODO method logic and comments
+    private void moveChessPiece(short lineFrom,
+				short rowFrom,
+				short lineTO,
+				short rowTo) {
+	// TODO implement method
     }
 }

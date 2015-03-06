@@ -1,14 +1,14 @@
 package core;
 
-import java.util.List;
+import java.util.Hashtable;
 
-public class Map {
+public class ChessMap {
 
     // ATTRIBUTES
-    private List<String> constellations;
+    private Hashtable<String, Constellation> constellations = new Hashtable<String, Constellation>();
 
-    private Constellation getConstellationById() {
-
+    private Constellation getConstellationById(String id) {
+	return constellations.get(id);
     }
 
     // PUBLIC METHODS

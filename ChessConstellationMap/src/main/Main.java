@@ -1,12 +1,12 @@
 package main;
 
-import core.Map;
+import core.ChessMap;
 
 public class Main {
 
     public static void main(String[] args) {
 	// TODO Auto-generated method stub
-	Map chessMap = new Map();
+	ChessMap chessMap = new ChessMap();
 	chessMap.startMapGeneration();
     }
 
