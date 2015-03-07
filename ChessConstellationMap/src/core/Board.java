@@ -6,7 +6,7 @@ import pieces.ChessPiece;
 import pieces.Move;
 
 /**
- * Representation of the chess board within a constellation
+ * Representation of the chess board within a constellation.
  * 
  * @author Andy
  * 
