@@ -91,9 +91,9 @@ public class Board {
     }
     
     /**
-     * Will commit the next move contained in {@link moves}<br/>
+     * Will commit the next move contained in {@link moves}.<br/>
      * This is the first destination coordinate in the first Move object of
-     * {@link moves}<br/>
+     * {@link moves}.<br/>
      * 
      * @param fromLine
      * @param fromRow
