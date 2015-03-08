@@ -1,4 +1,4 @@
-package pieces;
+package util;
 
 import java.util.ArrayList;
 
@@ -61,7 +61,8 @@ public class Move {
     /**
      * Will remove the returned element.
      * 
-     * @return: The first Element in the {@link destinations} list
+     * @return: The first Element in the {@link destinations} list. Will return
+     *          null of there is no such element.
      */
     public int[] getAndRemoveFirstDestination() {
 	if (!this.destinations.isEmpty()) {

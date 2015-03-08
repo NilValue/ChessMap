@@ -1,9 +1,6 @@
 package core;
 
-import java.util.ArrayList;
-
 import pieces.ChessPiece;
-import pieces.Move;
 
 /**
  * Representation of the chess board within a constellation.
@@ -20,7 +17,6 @@ public class Board {
      */
     public Board() {
 	this.board = new ChessPiece[8][8];
-	this.moves = new ArrayList<Move>();
 	this.generateStartingPosition();
     }
     
@@ -30,77 +26,41 @@ public class Board {
      * @param board
      */
     public Board(Board board) {
+	this.board = new ChessPiece[8][8];
 	
+	/*
+	 * First copy the pointers to all elements from the old board. Since the
+	 * chess pieces are each only instantiated twice (once for each color)
+	 * the new board only needs to point to the pieces shared by all boards
+	 * instead of instantiating each piece anew. This improves performance
+	 * because of less memory usage.
+	 */
+	for (int i = 0; i < this.board.length; i++) {
+	    for (int j = 0; j < this.board[i].length; j++) {
+		this.board[i][j] = board.getBoard()[i][j];
+	    }
+	}
     }
     
     /**
      * Contains and represents the chess board and its pieces
      */
     private ChessPiece[][] board;
-    private ArrayList<Move> moves;
     
     /**
-     * Adds a new instance of Move to the list {@link moves} if there is none
-     * with the assigned of fromPos.<br/>
-     * If there is already such an instance of Move in the list, then it will
-     * access that instance and add the toPos (moves.addDestination).<br/>
-     * However, if there is already an instance of Move with the same fromPos
-     * and the same toPos the method will do nothing.<br/>
-     * (The method Move.addDestination has to specify that all destinations have
-     * to be distinct from each other) <br/>
-     * 
-     * 
-     * @param fromPos
-     *        : f.e. an array [0,2]
-     * @param toPos
-     *        : like fromPos
-     * @throws Exception
-     *         : In case that two movesToAccess become available in
-     *         Board.addMove(), this would mean that the there are two moves
-     *         with the with the same int[] fromPos which woukd have to be fixed
+     * Generates the starting position of a match of chess on the {@link #board}
+     * .<br/>
      */
-    public void addMove(int[] fromPos, int[] toPos) throws Exception {
-	if (fromPos.length != 2 || toPos.length != 2) {
-	    throw new IllegalArgumentException("ERROR: fromPos and toPos must be arrays with the length of 2!");
-	}
-	
-	Move moveToAccess = null;
-	
-	for (Move moveToCheck : this.moves) {
-	    if (moveToCheck.getFromPos() == fromPos) {
-		if (moveToAccess == null) {
-		    moveToAccess = moveToCheck;
-		} else {
-		    throw new Exception("Two movesToAccess available in Board.addMove()!");
-		}
-	    }
-	}
-	if (moveToAccess != null) {
-	    moveToAccess.addDestination(toPos);
-	} else {
-	    moves.add(new Move(fromPos, toPos));
-	}
+    private void generateStartingPosition() {
+	// TODO method implementation
     }
     
-    private void generateStartingPosition() {
-	
+    public void movePiece(int[] fromPos, int[] toPos) {
+	// TODO method implementation
     }
     
     public ChessPiece[][] getBoard() {
 	return this.board;
     }
     
-    /**
-     * Will commit the next move contained in {@link moves}<br/>
-     * This is the first destination coordinate in the first Move object of
-     * {@link moves}<br/>
-     * 
-     * @param fromLine
-     * @param fromRow
-     * @param toLine
-     * @param toRow
-     */
-    public void moveChessPiece() {
-	
-    }
 }

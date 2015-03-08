@@ -1,4 +1,4 @@
-package main;
+package util;
 
 /**
  * Represents the color of a chess piece

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import pieces.Move;
+import util.Move;
 
 public class MoveTest {
     

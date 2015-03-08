@@ -1,9 +1,8 @@
 package pieces;
 
-import java.util.List;
-
-import main.Color;
-import core.Board;
+import util.Color;
+import util.Move;
+import core.Constellation;
 
 public class Pawn extends ChessPiece {
     
@@ -12,7 +11,7 @@ public class Pawn extends ChessPiece {
     }
     
     @Override
-    public List<Integer[]> getPossibleMoves(Board board) {
+    public Move getPossibleMoves(Constellation constellation) {
 	// TODO Auto-generated method stub
 	return null;
     }
