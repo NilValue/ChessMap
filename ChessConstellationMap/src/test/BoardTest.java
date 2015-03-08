@@ -2,8 +2,13 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.junit.Test;
 
+import pieces.Bishop;
+import pieces.ChessPiece;
+import util.Color;
 import core.Board;
 
 public class BoardTest {
@@ -29,6 +34,43 @@ public class BoardTest {
     }
     
     @Test
+    public void testCopyConstructor() {
+	Board board = new Board();
+	Board board2 = new Board();
+	
+	for (int i = 0; i < board.getBoard().length; i++) {
+	    for (int j = 0; j < board.getBoard()[i].length; j++) {
+		board2.getBoard()[i][j] = new Bishop(Color.BLACK);
+		
+	    }
+	}
+	System.out.println("PAUSE");
+	
+	// try {
+	// board.getBoard()[i][j] = board2.getBoard()[i][j].getClass()
+	// .getConstructor(Color.class)
+	// .newInstance(Color.WHITE);
+	// } catch (InstantiationException
+	// | IllegalAccessException
+	// | IllegalArgumentException
+	// | InvocationTargetException
+	// | NoSuchMethodException
+	// | SecurityException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	
+	board = board2;
+	
+	for (int i = 0; i < board.getBoard().length; i++) {
+	    for (int j = 0; j < board.getBoard()[i].length; j++) {
+		board2.getBoard()[i][j] = null;
+		System.out.println("PAUSE");
+	    }
+	}
+	System.out.println("PAUSE");
+    }
+    
     public void testAddMove() {
 	try {
 	    board.addMove(this.from, this.to);
@@ -55,6 +97,13 @@ public class BoardTest {
 	}
 	System.out.println("Pause");
 	
+    }
+    
+    @Test
+    public void myTest() {
+	ChessPiece[][] board = new ChessPiece[9][5];
+	System.out.println(board.length);
+	System.out.println(board[0].length);
     }
     
     public void testGetBoard() {
