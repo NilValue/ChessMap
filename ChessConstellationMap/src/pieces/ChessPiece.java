@@ -10,7 +10,7 @@ public abstract class ChessPiece {
 	this.color = color;
     }
     
-    protected Color color;
+    private final Color color;
     
     /**
      * @param constellation

@@ -12,13 +12,13 @@ import util.Move;
  * Is able to create and instantiate all new constellations out of itself and
  * add the to its containing map. <br/>
  * Knows which constellations can be created out of it (
- * {@link #nextPossibleMoves}).<br/>
+ * {@link #nextPossibleConstellations}).<br/>
  * <br/>
  * Two different constellations shall point to the same board if they share it.<br/>
  * Two constellations with the same board differ in:<br/>
  * - the color of the moving player ({@link #movingPlayer})<br/>
  * - the color of the player which is checkmate (@link {@link #checkmatePlayer})<br/>
- * - the list of the {@link #nextPossibleMoves}<br/>
+ * - the list of the {@link #nextPossibleConstellations}<br/>
  * 
  * @author Andy
  * 
@@ -41,6 +41,7 @@ public class Constellation {
 	this.movingPlayer = Color.WHITE;
 	this.board = new Board();
 	this.moves = new ArrayList<Move>();
+	this.nextPossibleConstellations = new ArrayList<Constellation>();
     }
     
     /**
@@ -53,13 +54,14 @@ public class Constellation {
      * 
      * @param constellation
      *        : The constellation from which the new constellation is created
+     * @throws Exception
      */
-    public Constellation(Constellation constellation) {
+    public Constellation(Constellation constellation) throws Exception {
 	
 	this.allPossibleMovesGenerated = false;
 	
 	// Defining the color of the moving player in the new constellation
-	switch (constellation.movingPlayer) {
+	switch (constellation.getMovingPlayer()) {
 	
 	    case BLACK:
 		this.movingPlayer = Color.WHITE;
@@ -68,6 +70,9 @@ public class Constellation {
 	    case WHITE:
 		this.movingPlayer = Color.BLACK;
 		break;
+	    
+	    default:
+		throw new Exception("No color assigned to movingPlayer at initializaiton of a new Constellation!");
 	}
 	
 	/*
@@ -81,13 +86,19 @@ public class Constellation {
 	 * So moves is instantiated as a new ArrayList.
 	 */
 	this.moves = new ArrayList<Move>();
+	
+	// TODO execute move
+	
+	// TODO Generate Id and add in IdManager
+	
+	this.nextPossibleConstellations = new ArrayList<Constellation>();
     }
     
     /**
      * Player that would have to do the next move in this constellation,<br/>
      * e.g. in WHITE in the very first constellation
      */
-    private Color movingPlayer;
+    private final Color movingPlayer;
     
     /**
      * Player which is set checkmate in the current constellation<br/>
@@ -97,7 +108,7 @@ public class Constellation {
      */
     private Color checkmatePlayer;
     
-    private Board board;
+    private final Board board;
     private boolean allPossibleMovesGenerated;
     
     // all IDs shall be saved within their constellations. An IdManager object
@@ -105,10 +116,11 @@ public class Constellation {
     // implemented in ChessMap
     private String Id;
     
-    // TODO nextPossibleMoves in each constellation or gather in ChessMap?
-    private ArrayList<Constellation> nextPossibleMoves;
+    // TODO nextPossibleConstellations in each constellation or gather in
+    // ChessMap?
+    private final ArrayList<Constellation> nextPossibleConstellations;
     
-    private ArrayList<Move> moves;
+    private final ArrayList<Move> moves;
     
     /**
      * Executes the next logical move.<br/>
@@ -116,9 +128,13 @@ public class Constellation {
      * Move object in the List moves.<br/>
      * The result is a new constellation with the following properties:<br/>
      * TODO define properties
+     * 
+     * @throws Exception
      */
-    public Constellation moveNext() {
-	Constellation newConstellation = new Constellation(this);
+    public Constellation moveNext() throws Exception {
+	Constellation newConstellation;
+	
+	newConstellation = new Constellation(this);
 	
 	// Defining the move that shall be executed
 	int[] fromPos = this.moves.get(0).getFromPos();
@@ -196,5 +212,9 @@ public class Constellation {
 	} else {
 	    moves.add(new Move(fromPos, toPos));
 	}
+    }
+    
+    public Color getMovingPlayer() {
+	return movingPlayer;
     }
 }

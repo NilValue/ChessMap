@@ -6,7 +6,7 @@ import core.Constellation;
 
 public class Pawn extends ChessPiece {
     
-    protected Pawn(Color color) {
+    public Pawn(Color color) {
 	super(color);
     }
     

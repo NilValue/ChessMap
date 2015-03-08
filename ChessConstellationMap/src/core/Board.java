@@ -21,11 +21,13 @@ public class Board {
     }
     
     /**
-     * Copy constructor for Board.<br/>
+     * Copy constructor for Board which mirrors the board simultaneously.<br/>
      * 
      * @param board
+     *        : The board of the former constellation.
      */
     public Board(Board board) {
+	// Initialize a new board
 	this.board = new ChessPiece[8][8];
 	
 	/*
@@ -34,25 +36,41 @@ public class Board {
 	 * the new board only needs to point to the pieces shared by all boards
 	 * instead of instantiating each piece anew. This improves performance
 	 * because of less memory usage.
+	 * 
+	 * The board will be mirrored simultaneously so that the new board is
+	 * "spectated" from the side of the player who's turn it is then.
 	 */
 	for (int i = 0; i < this.board.length; i++) {
 	    for (int j = 0; j < this.board[i].length; j++) {
 		this.board[i][j] = board.getBoard()[i][j];
 	    }
 	}
+	// Mirror the board!
+	this.mirror();
     }
     
     /**
-     * Contains and represents the chess board and its pieces
+     * Represents the chess board and contains pointers to its pieces
      */
-    private ChessPiece[][] board;
+    private final ChessPiece[][] board;
     
     /**
      * Generates the starting position of a match of chess on the {@link #board}
      * .<br/>
+     * The point of view onto the board is the point of view of the white
+     * player.<br/>
      */
     private void generateStartingPosition() {
+	
 	// TODO method implementation
+    }
+    
+    /**
+     * Mirrors the board so that the point of view from which the Constellation
+     * looks at it is the point of view of the player who's turn it is.<br/>
+     */
+    private void mirror() {
+	// TODO mirror the board
     }
     
     public void movePiece(int[] fromPos, int[] toPos) {
