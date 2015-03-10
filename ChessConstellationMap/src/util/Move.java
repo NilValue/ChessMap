@@ -27,13 +27,13 @@ public class Move {
      * The position of the tile which contains the ChessPiece that shall be
      * moved.
      */
-    private int[] fromPos;
+    private final int[] fromPos;
     
     /**
      * A list of destinations the ChessPiece that lies in {@link fromPos} can be
      * moved to.
      */
-    private ArrayList<int[]> destinations;
+    private final ArrayList<int[]> destinations;
     
     public void addDestination(int line, int row) {
 	int[] destination = { line, row };

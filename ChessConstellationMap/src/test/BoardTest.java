@@ -33,7 +33,6 @@ public class BoardTest {
 	fail("Not yet implemented");
     }
     
-    @Test
     public void testCopyConstructor() {
 	Board board = new Board();
 	Board board2 = new Board();
@@ -99,15 +98,13 @@ public class BoardTest {
 	
     }
     
-    @Test
-    public void myTest() {
-	ChessPiece[][] board = new ChessPiece[9][5];
-	System.out.println(board.length);
-	System.out.println(board[0].length);
-    }
-    
     public void testGetBoard() {
 	fail("Not yet implemented");
     }
     
+    @Test
+    public void myTest() {
+	Bishop myBishop = new Bishop(Color.WHITE);
+	myBishop.testMethod();
+    }
 }

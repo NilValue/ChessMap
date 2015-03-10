@@ -20,7 +20,7 @@ public abstract class ChessPiece {
      */
     public abstract Move getPossibleMoves(Constellation constellation);
     
-    public Color getColor() {
+    public final Color getColor() {
 	return this.color;
     }
 }

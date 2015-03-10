@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 
 import util.Color;
+import util.IdManager;
 import util.Move;
 
 /**
@@ -21,7 +22,6 @@ import util.Move;
  * - the list of the {@link #nextPossibleConstellations}<br/>
  * 
  * @author Andy
- * 
  */
 public class Constellation {
     
@@ -34,23 +34,51 @@ public class Constellation {
      * - {link #movingPLayer} is set to {@code Color.WHITE}.<br/>
      * - {link #board} will receive a new instance of the class {@code Board}
      * using the default constructor.
-     * 
      */
-    public Constellation() {
+    public Constellation(IdManager idManager) {
+	/*
+	 * Every constellation starts with no possible Moves generated
+	 */
 	this.allPossibleMovesGenerated = false;
+	
+	/*
+	 * In chess the first moving player is the white one
+	 */
 	this.movingPlayer = Color.WHITE;
+	
+	/*
+	 * Every constellation has its own board and its own list of moves
+	 */
 	this.board = new Board();
 	this.moves = new ArrayList<Move>();
+	
+	/*
+	 * The IdManager shall be initialized within the constructor of the
+	 * ChessMap class
+	 */
+	this.idManager = idManager;
+	
+	/*
+	 * The list of the next possible constellations for each constellation
+	 * exists within the IdManager
+	 */
 	this.nextPossibleConstellations = new ArrayList<Constellation>();
+	
+	/*
+	 * Generate Id and set within this constellation
+	 */
+	this.id = IdManager.generateId(this);
+	
+	/*
+	 * Add this new constellation to the IdManager
+	 */
+	this.idManager.addConstellation(this);
+	
     }
     
     /**
      * This constructor creates a new constellation based on an existing
      * constellation<br/>
-     * It will:<br/>
-     * 1.) execute the move on the board<br/>
-     * 2.)<br/>
-     * X.) Check if there can follow any constellation after it<br/>
      * 
      * @param constellation
      *        : The constellation from which the new constellation is created
@@ -60,8 +88,10 @@ public class Constellation {
 	
 	this.allPossibleMovesGenerated = false;
 	
-	// Defining the color of the moving player in the new constellation
-	switch (constellation.getMovingPlayer()) {
+	/*
+	 * Defining the color of the moving player in the new constellation
+	 */
+	switch (constellation.movingPlayer) {
 	
 	    case BLACK:
 		this.movingPlayer = Color.WHITE;
@@ -82,16 +112,28 @@ public class Constellation {
 	this.board = new Board(constellation.board);
 	
 	/*
-	 * We do not yet know which moves are available in this constellation.
-	 * So moves is instantiated as a new ArrayList.
+	 * We do not know yet know which moves are available in this
+	 * constellation. So moves is instantiated as a new ArrayList.
 	 */
 	this.moves = new ArrayList<Move>();
 	
 	// TODO execute move
 	
-	// TODO Generate Id and add in IdManager
-	
 	this.nextPossibleConstellations = new ArrayList<Constellation>();
+	
+	// TODO add this Constellation(ConstellationId) to the list of next
+	// possible Constellation of the previous constellation
+	
+	this.idManager = constellation.idManager;
+	
+	/*
+	 * Generate Id and set within this constellation
+	 */
+	this.id = IdManager.generateId(this);
+	
+	// TODO what if constellation is already existent shall be checked and
+	// dealt with here
+	this.idManager.addConstellation(this);
     }
     
     /**
@@ -101,26 +143,47 @@ public class Constellation {
     private final Color movingPlayer;
     
     /**
+     * The idManager is initialized at the call of the standard constructor
+     * which is only to be called once per ChessMap.<br/>
+     * All idManager identifiers of all constellations of one ChessMap point to
+     * the same IdManager object.<br/>
+     */
+    private final IdManager idManager;
+    
+    /**
      * Player which is set checkmate in the current constellation<br/>
      * Either null or same value as {@code movingPlayer}<br/>
      * <br/>
-     * If checkmate != null then nextPossibleMoves == null
+     * Note: If checkmatePlayer != null then nextPossibleMoves == null
      */
     private Color checkmatePlayer;
     
     private final Board board;
     private boolean allPossibleMovesGenerated;
     
-    // all IDs shall be saved within their constellations. An IdManager object
-    // with pointers to the constellations with their respective Ids will be
-    // implemented in ChessMap
-    private String Id;
+    /**
+     * all IDs shall be saved within their constellations. An IdManager object
+     * with pointers to the constellations with their respective Ids will be
+     * implemented in ChessMap
+     */
+    private final String id;
     
-    // TODO nextPossibleConstellations in each constellation or gather in
-    // ChessMap?
+    // TODO make a method for this one, it shall retrieve the constellation
+    // out of the IdManager by the constellation's ID
+    /**
+     * Every finished constellation shall know which constellations can follow
+     * out of it.<br/>
+     * Furthermore it shall be able to retrieve those out of it IdManager<br/>
+     */
     private final ArrayList<Constellation> nextPossibleConstellations;
     
-    private final ArrayList<Move> moves;
+    /**
+     * The moves that still have to be executed in order to get all
+     * {@link #nextPossibleConstellations}.<br/>
+     * Will be set to null once all {@link #nextPossibleConstellations} are
+     * generated.<br/>
+     */
+    private ArrayList<Move> moves;
     
     /**
      * Executes the next logical move.<br/>
@@ -129,6 +192,8 @@ public class Constellation {
      * The result is a new constellation with the following properties:<br/>
      * TODO define properties
      * 
+     * @return: A new Constellation with an empty List of moves on which the
+     *          next logical has been executed.
      * @throws Exception
      */
     public Constellation moveNext() throws Exception {
@@ -181,14 +246,13 @@ public class Constellation {
 	Move moveToAccess = null;
 	
 	/*
-	 * ForEach in order to check if any of the Move objects in this.moves
-	 * already contains the fromPos of the destination that shall be added.
-	 * If there is one then moveToAccess will point to this Move object. If
-	 * not the moveToAcces will stay null in which case a new Move object
-	 * will be instantiated and added to the ArrayList this.moves.
-	 * 
-	 * Also: checks if there are two Move objects with the same fromPos in
-	 * which case an Exception will be thrown.
+	 * ForEach loop in order to check if any of the Move objects in
+	 * this.moves already contains the fromPos of the destination that shall
+	 * be added. If there is one then moveToAccess will point to this Move
+	 * object. If not the moveToAccess will stay null in which case a new
+	 * Move object will be instantiated and added to the ArrayList
+	 * this.moves. Also: checks if there are two Move objects with the same
+	 * fromPos in which case an Exception will be thrown.
 	 */
 	for (Move moveToCheck : this.moves) {
 	    if (moveToCheck.getFromPos() == fromPos) {
@@ -214,7 +278,8 @@ public class Constellation {
 	}
     }
     
-    public Color getMovingPlayer() {
-	return movingPlayer;
+    public String getId() {
+	return this.id;
     }
+    
 }
