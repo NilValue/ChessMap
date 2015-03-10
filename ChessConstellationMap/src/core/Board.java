@@ -81,7 +81,8 @@ public class Board {
 
 	// TEST
 	
-	System.out.println("test");
+
+	System.out.println("test2");
 	return this.boardArray;
     }
     
