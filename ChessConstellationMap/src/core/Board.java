@@ -78,9 +78,8 @@ public class Board {
     }
     
     public ChessPiece[][] getBoardArray() {
-	//T
+	// Test
 	
-	System.out.println("test");
 	return this.boardArray;
     }
     
