@@ -78,17 +78,6 @@ public class Board {
     }
     
     public ChessPiece[][] getBoardArray() {
-
-	// some comment changed
-	
-	// TEST
-	System.out.println("test");
-	
-	
-	System.out.println("test2");
-	
-	System.out.println("test4567");
-	
 	return this.boardArray;
     }
     
