@@ -282,4 +282,8 @@ public class Constellation {
 	return this.id;
     }
     
+    public Board getBoard() {
+	return this.board;
+    }
+    
 }

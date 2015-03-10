@@ -77,4 +77,11 @@ public class Board {
 	// TODO method implementation
     }
     
+    public ChessPiece[][] getBoardArray() {
+	//T
+	
+	System.out.println("test");
+	return this.boardArray;
+    }
+    
 }
