@@ -78,7 +78,7 @@ public class Board {
     }
     
     public ChessPiece[][] getBoardArray() {
-	// Test
+	// Tes
 	
 	return this.boardArray;
     }
