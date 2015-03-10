@@ -10,7 +10,7 @@ public abstract class ChessPiece {
 	this.color = color;
     }
     
-    protected Color color;
+    private final Color color;
     
     /**
      * @param constellation
@@ -20,7 +20,7 @@ public abstract class ChessPiece {
      */
     public abstract Move getPossibleMoves(Constellation constellation);
     
-    public Color getColor() {
+    public final Color getColor() {
 	return this.color;
     }
 }
