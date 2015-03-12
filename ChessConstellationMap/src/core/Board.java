@@ -1,6 +1,7 @@
 package core;
 
 import pieces.ChessPiece;
+import pieces.ChessPieceContainer;
 
 /**
  * Representation of the chess board within a constellation.
@@ -11,7 +12,7 @@ public class Board {
     
     /**
      * Default constructor for the first board in the first constellation of the
-     * map. Fills the board with the starting positions.<br/>
+     * map. Fills the board with the starting positions of a match of chess.<br/>
      */
     public Board() {
 	this.boardArray = new ChessPiece[8][8];
@@ -19,39 +20,33 @@ public class Board {
     }
     
     /**
-     * Copy constructor for Board which mirrors the board simultaneously.<br/>
+     * Deep copy constructor for Board which mirrors the board simultaneously.<br/>
      * 
-     * @param board
-     *        : The board of the former constellation.
+     * @param constellation
+     *        - The former constellation.
      */
-    public Board(Board board) {
-	
-	// Initialize a new board
+    public Board(Constellation constellation) {
 	this.boardArray = new ChessPiece[8][8];
 	
 	/*
-	 * First copy the pointers to all elements from the old board. Since the
-	 * chess pieces are each only instantiated twice (once for each color)
-	 * the new board only needs to point to the pieces shared by all boards
-	 * instead of instantiating each piece anew. This improves performance
-	 * because of less memory usage.
+	 * The new board is a deep copy of the old board, while the new
+	 * boardArray is basically a mirrored shallow copy of the old
+	 * boardArray. In other words: Since the chess pieces are each only
+	 * instantiated twice (once for each color) the new board only needs to
+	 * point to the pieces shared by all boards instead of instantiating
+	 * each piece anew. The board is simultaneously mirrored (therefore [7 -
+	 * i] and [7 - j], so that the new board is "viewed" from the side of
+	 * the player who's turn it is in the new constellation.
 	 */
 	for (int i = 0; i < this.boardArray.length; i++) {
 	    for (int j = 0; j < this.boardArray[i].length; j++) {
-		this.boardArray[i][j] = board.boardArray[i][j];
+		this.boardArray[i][j] = constellation.getBoard().boardArray[7 - i][7 - j];
 	    }
 	}
-	
-	/*
-	 * The board will now be mirrored so that the new board is "spectated"
-	 * from the side of the player who's turn it is in the new Constellation
-	 * object which constructor called the copy constructor of Board.
-	 */
-	this.mirror();
     }
     
     /**
-     * Represents the chess board and contains pointers to its pieces
+     * Represents the chess board and contains pointers to the pieces.
      */
     private final ChessPiece[][] boardArray;
     
@@ -62,21 +57,55 @@ public class Board {
      * player.<br/>
      */
     private void generateStartingPosition() {
-	// TODO method implementation
+	
+	int line;
+	
+	/*
+	 * Fill in all white pawns.
+	 */
+	line = 1;
+	for (int j = 0; j < boardArray[line].length; j++) {
+	    this.boardArray[line][j] = ChessPieceContainer.getWhitePawn();
+	}
+	
+	/*
+	 * Fill in all other white pieces.
+	 */
+	line = 0;
+	this.boardArray[line][0] = ChessPieceContainer.getWhiteRook();
+	this.boardArray[line][1] = ChessPieceContainer.getWhiteKnight();
+	this.boardArray[line][2] = ChessPieceContainer.getWhiteBishop();
+	this.boardArray[line][3] = ChessPieceContainer.getWhiteQueen();
+	this.boardArray[line][4] = ChessPieceContainer.getWhiteKnight();
+	this.boardArray[line][5] = ChessPieceContainer.getWhiteBishop();
+	this.boardArray[line][6] = ChessPieceContainer.getWhiteKnight();
+	this.boardArray[line][7] = ChessPieceContainer.getWhiteRook();
+	
+	/*
+	 * Fill in all black pawns.
+	 */
+	line = 6;
+	for (int j = 0; j < boardArray[line].length; j++) {
+	    this.boardArray[line][j] = ChessPieceContainer.getBlackPawn();
+	}
+	
+	/*
+	 * Fill in all other black pieces.
+	 */
+	line = 7;
+	this.boardArray[line][0] = ChessPieceContainer.getBlackRook();
+	this.boardArray[line][1] = ChessPieceContainer.getBlackKnight();
+	this.boardArray[line][2] = ChessPieceContainer.getBlackBishop();
+	this.boardArray[line][3] = ChessPieceContainer.getBlackQueen();
+	this.boardArray[line][4] = ChessPieceContainer.getBlackKnight();
+	this.boardArray[line][5] = ChessPieceContainer.getBlackBishop();
+	this.boardArray[line][6] = ChessPieceContainer.getBlackKnight();
+	this.boardArray[line][7] = ChessPieceContainer.getBlackRook();
     }
     
     /**
-     * Mirrors the board so that the point of view from which the Constellation
-     * looks at it is the point of view of the player who's turn it is.<br/>
+     * @return - the {@link #boardArray}
      */
-    private void mirror() {
-	// TODO mirror the board
-    }
-    
-    public void movePiece(int[] fromPos, int[] toPos) {
-	// TODO method implementation
-    }
-    
     public ChessPiece[][] getBoardArray() {
 	return this.boardArray;
     }

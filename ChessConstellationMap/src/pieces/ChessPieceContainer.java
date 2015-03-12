@@ -30,51 +30,51 @@ public abstract class ChessPieceContainer {
     private final static Queen blackQueen = new Queen(Color.BLACK);
     private final static Queen whiteQueen = new Queen(Color.WHITE);
     
-    public static Pawn getBlackpawn() {
-	return blackPawn;
+    public static Pawn getBlackPawn() {
+	return ChessPieceContainer.blackPawn;
     }
     
-    public static Pawn getWhitepawn() {
-	return whitePawn;
+    public static Pawn getWhitePawn() {
+	return ChessPieceContainer.whitePawn;
     }
     
-    public static Rook getBlackrook() {
-	return blackRook;
+    public static Rook getBlackRook() {
+	return ChessPieceContainer.blackRook;
     }
     
-    public static Rook getWhiterook() {
-	return whiteRook;
+    public static Rook getWhiteRook() {
+	return ChessPieceContainer.whiteRook;
     }
     
-    public static Knight getBlackknight() {
-	return blackKnight;
+    public static Knight getBlackKnight() {
+	return ChessPieceContainer.blackKnight;
     }
     
-    public static Knight getWhiteknight() {
-	return whiteKnight;
+    public static Knight getWhiteKnight() {
+	return ChessPieceContainer.whiteKnight;
     }
     
-    public static Bishop getBlackbishop() {
-	return blackBishop;
+    public static Bishop getBlackBishop() {
+	return ChessPieceContainer.blackBishop;
     }
     
-    public static Bishop getWhitebishop() {
-	return whiteBishop;
+    public static Bishop getWhiteBishop() {
+	return ChessPieceContainer.whiteBishop;
     }
     
-    public static King getBlackking() {
-	return blackKing;
+    public static King getBlackKing() {
+	return ChessPieceContainer.blackKing;
     }
     
-    public static King getWhiteking() {
-	return whiteKing;
+    public static King getWhiteKing() {
+	return ChessPieceContainer.whiteKing;
     }
     
-    public static Queen getBlackqueen() {
-	return blackQueen;
+    public static Queen getBlackQueen() {
+	return ChessPieceContainer.blackQueen;
     }
     
-    public static Queen getWhitequeen() {
-	return whiteQueen;
+    public static Queen getWhiteQueen() {
+	return ChessPieceContainer.whiteQueen;
     }
 }
