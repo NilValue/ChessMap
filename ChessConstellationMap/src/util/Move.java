@@ -107,9 +107,7 @@ public class Move {
 	    throw new IllegalArgumentException("ERROR: fromPos must be an array with the length of 2!");
 	}
 	
-	/*
-	 * If-clause to make sure that no destination is inserted twice.
-	 */
+	// If-clause makes sure that no destination is inserted twice.
 	if (!this.destinations.contains(destination)) {
 	    this.destinations.add(destination);
 	}
