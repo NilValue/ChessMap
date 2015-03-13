@@ -2,6 +2,7 @@ package util;
 
 import java.util.Hashtable;
 
+import core.Board;
 import core.Constellation;
 
 public class IdManager {
@@ -34,16 +35,11 @@ public class IdManager {
      *         Calls a private method because it might become handy to implement
      *         different types of IDs later on <br/>
      */
-    public static String generateId(Constellation constellation) {
-	return IdManager.generateIdForMapGeneration();
+    public String generateId(Board board, Color movingPlayer) {
+	return this.generateIdForMapGeneration(board, movingPlayer);
     }
     
-    // TODO unsure if needed
-    public static Constellation generateConstellationFromId(String id) {
-	
-    }
-    
-    private static String generateIdForMapGeneration() {
+    private String generateIdForMapGeneration(Board board, Color movingPlayer) {
 	
     }
 }
