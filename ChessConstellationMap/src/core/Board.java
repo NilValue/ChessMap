@@ -55,7 +55,7 @@ public class Board {
      * The point of view onto the board is the point of view of the white
      * player.<br/>
      */
-    private void generateStartingPosition() {
+    private final void generateStartingPosition() {
 	
 	int line;
 	
