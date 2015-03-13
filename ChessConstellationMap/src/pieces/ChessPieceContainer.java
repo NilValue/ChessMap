@@ -18,8 +18,8 @@ public abstract class ChessPieceContainer {
     private final static Rook blackRook = new Rook(Color.BLACK);
     private final static Rook whiteRook = new Rook(Color.WHITE);
     
-    private final static Knight blackKnight = new Knight(Color.BLACK);
-    private final static Knight whiteKnight = new Knight(Color.WHITE);
+    private final static Horse blackHorse = new Horse(Color.BLACK);
+    private final static Horse whiteHorse = new Horse(Color.WHITE);
     
     private final static Bishop blackBishop = new Bishop(Color.BLACK);
     private final static Bishop whiteBishop = new Bishop(Color.WHITE);
@@ -46,12 +46,12 @@ public abstract class ChessPieceContainer {
 	return ChessPieceContainer.whiteRook;
     }
     
-    public static Knight getBlackKnight() {
-	return ChessPieceContainer.blackKnight;
+    public static Horse getBlackHorse() {
+	return ChessPieceContainer.blackHorse;
     }
     
-    public static Knight getWhiteKnight() {
-	return ChessPieceContainer.whiteKnight;
+    public static Horse getWhiteHorse() {
+	return ChessPieceContainer.whiteHorse;
     }
     
     public static Bishop getBlackBishop() {
