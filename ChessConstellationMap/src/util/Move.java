@@ -34,12 +34,8 @@ public class Move {
 	    throw new IllegalArgumentException("ERROR: fromPos must be an array with the length of 2!");
 	}
 	
-	this.fromPos = new int[2];
-	
 	this.fromPos[0] = fromPos[0];
 	this.fromPos[1] = fromPos[1];
-	
-	this.destinations = new ArrayList<int[]>();
     }
     
     /**
@@ -59,25 +55,20 @@ public class Move {
      */
     public Move(int fromPosLine, int fromPosRow) {
 	
-	this.fromPos = new int[2];
-	
 	this.fromPos[0] = fromPosLine;
 	this.fromPos[1] = fromPosRow;
-	
-	this.destinations = new ArrayList<int[]>();
     }
     
     /**
      * The coordinates of the tile which contains the chess piece which possible
      * moves are saved within this Move object.
      */
-    private final int[] fromPos;
-    
+    private final int[] fromPos = new int[2];
     /**
      * A list of destinations the chess piece which is specified in
      * {@link #fromPos} can move to.
      */
-    private final ArrayList<int[]> destinations;
+    private final ArrayList<int[]> destinations = new ArrayList<int[]>();
     
     /**
      * Adds a destination to {@link #destinations}.<br/>
