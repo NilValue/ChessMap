@@ -2,7 +2,6 @@ package pieces;
 
 import util.Color;
 import util.Move;
-import core.Constellation;
 
 public class Bishop extends ChessPiece {
     
@@ -12,7 +11,7 @@ public class Bishop extends ChessPiece {
     }
     
     @Override
-    public Move getPossibleMoves(Constellation constellation) {
+    public Move getPossibleMoves(ChessPiece[][] boardArray, int[] fromPos) {
 	// TODO Auto-generated method stub
 	return null;
     }

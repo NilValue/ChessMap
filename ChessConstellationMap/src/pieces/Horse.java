@@ -3,9 +3,9 @@ package pieces;
 import util.Color;
 import util.Move;
 
-public class Queen extends ChessPiece {
+public class Horse extends ChessPiece {
     
-    public Queen(Color color) {
+    public Horse(Color color) {
 	super(color);
 	// TODO Auto-generated constructor stub
     }
