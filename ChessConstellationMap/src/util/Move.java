@@ -5,9 +5,9 @@ import java.util.ArrayList;
 /**
  * Class for handling all the possible moves of a chess piece in a specific tile
  * represented by {@link #fromPos}.<br/>
- * Will not verify the validity of the moves, only save and manage distinct
+ * Does not verify the validity of the moves, only save and manage distinct
  * values of possible moves.<br/>
- * Also will not calculate any possible moves. This is done in the specific
+ * Also does not calculate any possible moves. This is done in the specific
  * ChessPiece object.<br/>
  * 
  * @author Andy
@@ -31,7 +31,7 @@ public class Move {
      */
     public Move(int fromPos[]) throws IllegalArgumentException {
 	if (fromPos.length != 2) {
-	    throw new IllegalArgumentException("ERROR: fromPos must be an array with the length of 2!");
+	    throw new IllegalArgumentException("fromPos must be an array with the length of 2!");
 	}
 	
 	this.fromPos[0] = fromPos[0];
@@ -54,7 +54,6 @@ public class Move {
      *        parameter {@code fromPosLine}.
      */
     public Move(int fromPosLine, int fromPosRow) {
-	
 	this.fromPos[0] = fromPosLine;
 	this.fromPos[1] = fromPosRow;
     }
@@ -66,14 +65,14 @@ public class Move {
     private final int[] fromPos = new int[2];
     /**
      * A list of destinations the chess piece which is specified in
-     * {@link #fromPos} can move to.
+     * {@link #fromPos} can move to.<br/>
+     * A destination is an array with a length of 2.
      */
     private final ArrayList<int[]> destinations = new ArrayList<int[]>();
     
     /**
-     * Adds a destination to {@link #destinations}.<br/>
-     * Shall assert that all destinations are distinct values.<br/>
-     * Does nothing if the destination that shall be added is already contained.<br/>
+     * Calls {@link #addDestination(int[])} with line and row as values in the
+     * array.
      * 
      * @param line
      *        - The first coordinate of the destination that shall be added.
@@ -91,32 +90,53 @@ public class Move {
      * Does nothing if the destination that shall be added is already contained.<br/>
      * 
      * @param destination
-     *        : Array with a size of 2.
+     *        : Array with a size of 2 containing the line and the row
+     *        coordinate of a chess board array..
      */
     public void addDestination(int[] destination) {
 	if (destination.length != 2) {
 	    throw new IllegalArgumentException("ERROR: fromPos must be an array with the length of 2!");
 	}
 	
-	// If-clause makes sure that no destination is inserted twice.
-	if (!this.destinations.contains(destination)) {
-	    this.destinations.add(destination);
+	// Throw exception if destination is already contained
+	if (this.destinations.contains(destination)) {
+	    throw new IllegalArgumentException("Destination already contained within this move!");
 	}
+	
+	this.destinations.add(destination);
+	
     }
     
     /**
-     * Will remove the returned element.<br/>
-     * 
-     * @return: The first Element in the {@link #destinations} list. Will return
+     * @return: The first element in the {@link #destinations} list. Will return
      *          null if there is no such element.
      */
-    public int[] getAndRemoveFirstDestination() {
-	if (!this.destinations.isEmpty()) {
-	    int[] destination = this.destinations.get(0);
-	    this.destinations.remove(0);
-	    return destination;
+    public int[] getNextDestination() {
+	if (!(this.destinations.isEmpty())) {
+	    return this.destinations.get(0);
 	}
 	return null;
+    }
+    
+    /**
+     * Removes the first element in the {@link #destinations} list.<br/>
+     * 
+     * @param destinationToRemove
+     *        - Asserts that the destination that will be removed has been
+     *        retrieved first.
+     */
+    public void removeDestination(int[] destinationToRemove) throws IllegalArgumentException {
+	if ((destinationToRemove.length != 2)) {
+	    throw new IllegalArgumentException("Transferred array has wrong length!");
+	}
+	
+	if (!(this.destinations.get(0)[0] == destinationToRemove[0] && this.destinations.get(0)[1] == destinationToRemove[1])) {
+	    throw new IllegalArgumentException("Transferred array has different values than the first destination array");
+	}
+	
+	if (!(this.destinations.isEmpty())) {
+	    this.destinations.remove(0);
+	}
     }
     
     public int[] getFromPos() {
