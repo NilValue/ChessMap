@@ -41,27 +41,18 @@ public class Constellation {
      */
     public Constellation(IdManager idManager) {
 	
-	// Every constellation starts with no possible Moves generated
-	
-	this.complete = false;
-	
 	// In chess the first moving player is the white one
 	this.movingPlayer = Color.WHITE;
 	
 	// Every constellation has its own board and its own list of moves
 	this.board = new Board();
-	this.moves = new ArrayList<Move>();
 	
 	// All constellations share the same idManager
 	this.idManager = idManager;
 	
-	// The list of the next possible constellations for each constellation
-	// exists within the IdManager
-	
-	this.followingConstellations = new ArrayList<Constellation>();
-	
-	// Generate Id and set within this constellation.
-	this.id = this.idManager.generateId(this.board, this.movingPlayer);
+	// Generate Id and set it within this constellation.
+	this.id = this.idManager.generateId(this.board.getBoardArray(),
+					    this.movingPlayer);
 	
 	this.calculateAllPossibleMoves();
     }
@@ -76,16 +67,14 @@ public class Constellation {
      * 2.) The new constellation must be added to the list of following
      * constellations of the former constellation.<br/>
      * 
-     * @param constellation
+     * @param formerConstellation
      *        : The constellation from which the new constellation is created
      * @throws Exception
      */
-    public Constellation(Constellation constellation) throws Exception {
-	
-	this.complete = false;
+    public Constellation(Constellation formerConstellation) throws Exception {
 	
 	// Defining the color of the moving player in the new constellation
-	switch (constellation.movingPlayer) {
+	switch (formerConstellation.movingPlayer) {
 	
 	    case BLACK:
 		this.movingPlayer = Color.WHITE;
@@ -99,29 +88,22 @@ public class Constellation {
 		throw new Exception("No color assigned to movingPlayer at initialization of a new Constellation!");
 	}
 	
-	if (this.movingPlayer == constellation.movingPlayer || this.movingPlayer == null) {
+	if (this.movingPlayer == formerConstellation.movingPlayer || this.movingPlayer == null) {
 	    throw new Exception("movingPlayer not assigned correctly while creating a new constellation with the copy constructor");
 	}
 	
-	// Generate a copy of the old constellation's board with the copy
-	// constructor of Board
-	this.board = new Board(constellation);
+	// Generate a mirrored copy of the old board
+	this.board = new Board(formerConstellation);
 	
-	// Move the piece so that the new constellation is valid
-	this.movePiece(constellation);
+	// TODO execute next logical single move
+	this.executeNextMove(formerConstellation);
 	
-	// We do not know yet know which moves are available in this
-	// constellation. So moves is instantiated as a new ArrayList.
-	this.moves = new ArrayList<Move>();
+	// Retrieve a pointer to the overall idManager
+	this.idManager = formerConstellation.idManager;
 	
-	this.followingConstellations = new ArrayList<Constellation>();
-	
-	// Retrieve a pointer to the overall idManager all previous
-	// constellations use as well.
-	this.idManager = constellation.idManager;
-	
-	// Generate Id and set within this constellation
-	this.id = this.idManager.generateId(this.board, this.movingPlayer);
+	// Generate Id and set it within this constellation
+	this.id = this.idManager.generateId(this.board.getBoardArray(),
+					    this.movingPlayer);
 	
 	this.calculateAllPossibleMoves();
     }
@@ -140,13 +122,9 @@ public class Constellation {
      */
     private final IdManager idManager;
     
-    /**
-     * Player which is set checkmate in the current constellation<br/>
-     * Either null or same value as {@code movingPlayer}<br/>
-     * <br/>
-     * Note: If checkmatePlayer != null then nextPossibleMoves == null
-     */
+    // TODO calculate checkmatePlayer and stalemate
     private Color checkmatePlayer;
+    private boolean stalemate;
     
     private final Board board;
     
@@ -154,7 +132,7 @@ public class Constellation {
      * A constellation is considered complete once all possible moves have been
      * executed.
      */
-    private boolean complete;
+    private boolean complete = false;
     
     /**
      * all IDs shall be saved within their constellations. An IdManager object
@@ -171,7 +149,7 @@ public class Constellation {
      * out of it.<br/>
      * Furthermore it shall be able to retrieve those out of it IdManager<br/>
      */
-    private final ArrayList<Constellation> followingConstellations;
+    private final ArrayList<Constellation> followingConstellations = new ArrayList<Constellation>();
     
     /**
      * The moves that still have to be executed in order to get all
@@ -179,7 +157,7 @@ public class Constellation {
      * Will be set to null once all {@link #followingConstellations} are
      * generated.<br/>
      */
-    private ArrayList<Move> moves;
+    private ArrayList<Move> moves = new ArrayList<Move>();
     
     /**
      * Executes the next logical move.<br/>
@@ -192,39 +170,15 @@ public class Constellation {
      * 
      * @throws Exception
      */
-    public void executeNextPossibleMove() throws Exception {
-	
-	Constellation newConstellation = new Constellation(this);
-	
+    private final void executeNextMove(Constellation formerConstellation) {
 	// TODO method implementation
-    }
-    
-    /**
-     * Checks if a player in the constellation is checkmate and automatically
-     * executes all subsequent changes (f.e.setting checkmatePlayer to be
-     * checkmate player's color).
-     * 
-     * @return true if a player is set checkmate
-     */
-    public boolean checkForCheckmate() {
-	
-	// TODO method implementation
-	
-	// TODO To be checked in the copy constructor, if true, then no moves
-	// have to be calculated etc
-	
-	if (checkmatePlayer != null) {
-	    return true;
-	} else {
-	    return false;
-	}
     }
     
     /**
      * Calculates all possible moves on this constellation and adds them to the
      * ArrayList moves.<br/>
      */
-    private void calculateAllPossibleMoves() {
+    private final void calculateAllPossibleMoves() {
 	for (ChessPiece[] line : board.getBoardArray()) {
 	    for (ChessPiece chessPiece : line) {
 		this.moves.add(chessPiece.getPossibleMoves(this));
@@ -232,10 +186,6 @@ public class Constellation {
 	}
 	// TODO unfinished: needs to check that no two moves with the same
 	// fromPos are in the list!
-    }
-    
-    private void movePiece(Constellation formerConstellation) {
-	// TODO
     }
     
     /**
