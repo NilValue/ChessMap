@@ -49,8 +49,8 @@ public class IdManager {
      *         Calls a private method because it might become handy to implement
      *         different types of IDs later on <br/>
      */
-    public String generateId(Constellation constellation) {
-    	return this.generateIdForMapGeneration(constellation.getBoard().getBoardArray(), constellation.getMovingPlayer());
+    public String generateId(ChessPiece[][] boardArray, Color movingPlayer) {
+    	return this.generateIdForMapGeneration(boardArray, movingPlayer);
     }
     
     // TODO unsure if needed

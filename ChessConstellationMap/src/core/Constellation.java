@@ -20,7 +20,7 @@ import util.Move;
  * Two constellations with the same board differ in:<br/>
  * - the color of the moving player ({@link #movingPlayer})<br/>
  * - the color of the player which is checkmate (@link {@link #checkmatePlayer})<br/>
- * - the list of the {@link #followingConstellations}<br/>
+ * - the list of the {@link #followingConstellations}
  * 
  * @author Andy
  */
