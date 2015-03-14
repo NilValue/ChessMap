@@ -51,8 +51,7 @@ public class Constellation {
 	this.idManager = idManager;
 	
 	// Generate Id and set it within this constellation.
-	this.id = this.idManager.generateId(this.board.getBoardArray(),
-					    this.movingPlayer);
+	this.id = this.idManager.generateId(this.board, this.movingPlayer);
 	
 	this.calculateAllPossibleMoves();
     }
@@ -95,15 +94,15 @@ public class Constellation {
 	// Generate a mirrored copy of the old board
 	this.board = new Board(formerConstellation);
 	
-	// TODO execute next logical single move
+	// TODO Handle errors that could occur while executing the moving!
+	// Execute next logical single move
 	this.executeNextMove(formerConstellation);
 	
 	// Retrieve a pointer to the overall idManager
 	this.idManager = formerConstellation.idManager;
 	
 	// Generate Id and set it within this constellation
-	this.id = this.idManager.generateId(this.board.getBoardArray(),
-					    this.movingPlayer);
+	this.id = this.idManager.generateId(this.board, this.movingPlayer);
 	
 	this.calculateAllPossibleMoves();
     }
