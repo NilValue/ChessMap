@@ -57,41 +57,41 @@ public class Board {
      */
     private final void generateStartingPosition() {
 	
-	int line;
+	int row;
 	
 	// Fill in all white pawns.
-	line = 1;
-	for (int j = 0; j < boardArray[line].length; j++) {
-	    this.boardArray[line][j] = ChessPieceContainer.getWhitePawn();
+	row = 1;
+	for (int j = 0; j < boardArray[row].length; j++) {
+	    this.boardArray[row][j] = ChessPieceContainer.getWhitePawn();
 	}
 	
 	// Fill in all other white pieces.
-	line = 0;
-	this.boardArray[line][0] = ChessPieceContainer.getWhiteRook();
-	this.boardArray[line][1] = ChessPieceContainer.getWhiteHorse();
-	this.boardArray[line][2] = ChessPieceContainer.getWhiteBishop();
-	this.boardArray[line][3] = ChessPieceContainer.getWhiteQueen();
-	this.boardArray[line][4] = ChessPieceContainer.getWhiteHorse();
-	this.boardArray[line][5] = ChessPieceContainer.getWhiteBishop();
-	this.boardArray[line][6] = ChessPieceContainer.getWhiteHorse();
-	this.boardArray[line][7] = ChessPieceContainer.getWhiteRook();
+	row = 0;
+	this.boardArray[row][0] = ChessPieceContainer.getWhiteRook();
+	this.boardArray[row][1] = ChessPieceContainer.getWhiteHorse();
+	this.boardArray[row][2] = ChessPieceContainer.getWhiteBishop();
+	this.boardArray[row][3] = ChessPieceContainer.getWhiteQueen();
+	this.boardArray[row][4] = ChessPieceContainer.getWhiteHorse();
+	this.boardArray[row][5] = ChessPieceContainer.getWhiteBishop();
+	this.boardArray[row][6] = ChessPieceContainer.getWhiteHorse();
+	this.boardArray[row][7] = ChessPieceContainer.getWhiteRook();
 	
 	// Fill in all black pawns.
-	line = 6;
-	for (int j = 0; j < boardArray[line].length; j++) {
-	    this.boardArray[line][j] = ChessPieceContainer.getBlackPawn();
+	row = 6;
+	for (int j = 0; j < boardArray[row].length; j++) {
+	    this.boardArray[row][j] = ChessPieceContainer.getBlackPawn();
 	}
 	
 	// Fill in all other black pieces.
-	line = 7;
-	this.boardArray[line][0] = ChessPieceContainer.getBlackRook();
-	this.boardArray[line][1] = ChessPieceContainer.getBlackHorse();
-	this.boardArray[line][2] = ChessPieceContainer.getBlackBishop();
-	this.boardArray[line][3] = ChessPieceContainer.getBlackQueen();
-	this.boardArray[line][4] = ChessPieceContainer.getBlackHorse();
-	this.boardArray[line][5] = ChessPieceContainer.getBlackBishop();
-	this.boardArray[line][6] = ChessPieceContainer.getBlackHorse();
-	this.boardArray[line][7] = ChessPieceContainer.getBlackRook();
+	row = 7;
+	this.boardArray[row][0] = ChessPieceContainer.getBlackRook();
+	this.boardArray[row][1] = ChessPieceContainer.getBlackHorse();
+	this.boardArray[row][2] = ChessPieceContainer.getBlackBishop();
+	this.boardArray[row][3] = ChessPieceContainer.getBlackQueen();
+	this.boardArray[row][4] = ChessPieceContainer.getBlackHorse();
+	this.boardArray[row][5] = ChessPieceContainer.getBlackBishop();
+	this.boardArray[row][6] = ChessPieceContainer.getBlackHorse();
+	this.boardArray[row][7] = ChessPieceContainer.getBlackRook();
     }
     
     /**

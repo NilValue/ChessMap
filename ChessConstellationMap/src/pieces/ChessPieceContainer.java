@@ -2,15 +2,15 @@ package pieces;
 
 import util.Color;
 
+/**
+ * Contains temporary identifiers to instantiate each variant of each chess
+ * piece exactly once.<br/>
+ * Pieces have to be available in a separate, globally accessible way (F.e. in
+ * case a Pawn moves through to the end and can now become a Queen, Rook, etc.).
+ * 
+ * @author Andy
+ */
 public abstract class ChessPieceContainer {
-    
-    /*
-     * Temporary identifiers to instantiate each variant of each chess piece
-     * exactly once
-     */
-    // TODO Pieces have to be available in a separate, globally accessible
-    // way in case a Pawn moves through to the end and can now become a
-    // Queen, Rook,...
     
     private final static Pawn blackPawn = new Pawn(Color.BLACK);
     private final static Pawn whitePawn = new Pawn(Color.WHITE);

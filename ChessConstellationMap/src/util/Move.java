@@ -45,17 +45,17 @@ public class Move {
      * However it might be useful to transfer the coordinates of the fromPos
      * array as plain int values. Therefore this constructor exists.<br/>
      * 
-     * @param fromPosLine
+     * @param fromPosRow
      *        - The first coordinate of the fromPos array hence the line number
      *        of the chess board which tile has to be specified as the one
      *        containing the chess piece that shall be moved.<br/>
-     * @param fromPosRow
+     * @param fromPosCol
      *        - The second coordinate of the fromPos array equivalent to the
      *        parameter {@code fromPosLine}.
      */
-    public Move(int fromPosLine, int fromPosRow) {
-	this.fromPos[0] = fromPosLine;
-	this.fromPos[1] = fromPosRow;
+    public Move(int fromPosRow, int fromPosCol) {
+	this.fromPos[0] = fromPosRow;
+	this.fromPos[1] = fromPosCol;
     }
     
     /**
@@ -71,16 +71,16 @@ public class Move {
     private final ArrayList<int[]> destinations = new ArrayList<int[]>();
     
     /**
-     * Calls {@link #addDestination(int[])} with line and row as values in the
+     * Calls {@link #addDestination(int[])} with row and column as values in the
      * array.
      * 
-     * @param line
-     *        - The first coordinate of the destination that shall be added.
      * @param row
+     *        - The first coordinate of the destination that shall be added.
+     * @param col
      *        - The second coordinate of the destination that shall be added.
      */
-    public void addDestination(int line, int row) {
-	int[] destination = { line, row };
+    public void addDestination(int row, int col) {
+	int[] destination = { row, col };
 	this.addDestination(destination);
     }
     
@@ -90,7 +90,7 @@ public class Move {
      * Does nothing if the destination that shall be added is already contained.<br/>
      * 
      * @param destination
-     *        : Array with a size of 2 containing the line and the row
+     *        : Array with a size of 2 containing the row and the column
      *        coordinate of a chess board array..
      */
     public void addDestination(int[] destination) {

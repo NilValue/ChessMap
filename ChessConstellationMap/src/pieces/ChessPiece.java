@@ -24,22 +24,22 @@ public abstract class ChessPiece {
     
     /**
      * Calls {@link #getPossibleMoves(ChessPiece[][], int[])}.<br/>
-     * The array coordinates of int[] are specified by {@code fromPosLine} and
-     * {@code fromPosRow}.
+     * The array coordinates of int[] are specified by {@code fromPosRow} and
+     * {@code fromPosCol}.
      * 
      * @param boardArray
      *        - the board's boardArray of the constellation in which the piece
      *        shall be moved
-     * @param fromPosLine
-     *        - first coordinate for the fromPos array
      * @param fromPosRow
+     *        - first coordinate for the fromPos array
+     * @param fromPosCol
      *        - second coordinate for the fromPos array
      * @return A move object containing all possible for that chess piece
      */
     public final Move getPossibleMoves(ChessPiece[][] boardArray,
-				       int fromPosLine,
-				       int fromPosRow) {
-	int[] fromPos = { fromPosLine, fromPosRow };
+				       int fromPosRow,
+				       int fromPosCol) {
+	int[] fromPos = { fromPosRow, fromPosCol };
 	return this.getPossibleMoves(boardArray, fromPos);
     }
     

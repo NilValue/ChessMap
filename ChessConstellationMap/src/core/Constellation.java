@@ -142,9 +142,6 @@ public class Constellation {
      */
     private final String id;
     
-    // TODO make a method for this one, it shall retrieve a list of all next
-    // possible constellations out of the IdManager by transferring the
-    // constellation's ID
     /**
      * Every finished constellation shall know which constellations can follow
      * out of it.<br/>
