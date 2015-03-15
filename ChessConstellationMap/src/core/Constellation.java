@@ -51,7 +51,8 @@ public class Constellation {
 	this.idManager = idManager;
 	
 	// Generate Id and set it within this constellation.
-	this.id = this.idManager.generateId(this.board, this.movingPlayer);
+	this.id = this.idManager.generateId(this.board.getBoardArray(),
+					    this.movingPlayer);
 	
 	this.calculateAllPossibleMoves();
     }
@@ -102,7 +103,8 @@ public class Constellation {
 	this.idManager = formerConstellation.idManager;
 	
 	// Generate Id and set it within this constellation
-	this.id = this.idManager.generateId(this.board, this.movingPlayer);
+	this.id = this.idManager.generateId(this.board.getBoardArray(),
+					    this.movingPlayer);
 	
 	this.calculateAllPossibleMoves();
     }
@@ -233,6 +235,7 @@ public class Constellation {
      *         fixed
      * @deprecated Replaced by calculateAllMoves() and incomplete
      */
+    @SuppressWarnings("unused")
     private void addMove(int[] fromPos, int[] toPos) throws Exception {
 	
 	// Step 1
