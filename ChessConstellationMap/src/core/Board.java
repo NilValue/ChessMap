@@ -28,18 +28,18 @@ public class Board {
      * In other words: Since the chess pieces are each only instantiated twice
      * (once for each color) the new board only needs to point to the pieces
      * shared by all boards instead of instantiating each piece anew. The board
-     * is simultaneously mirrored (therefore [7 - i] and [7 - j]), so that the
-     * new board is "viewed" from the side of the player who's turn it is in the
-     * new constellation.<br/>
+     * is simultaneously mirrored (therefore [7 - row] and [7 - col]), so that
+     * the new board is "viewed" from the side of the player who's turn it is in
+     * the new constellation.<br/>
      * 
      * @param constellation
      *        - The former constellation.
      */
     public Board(Constellation constellation) {
 	// Copy the old board and mirror it
-	for (int i = 0; i < this.boardArray.length; i++) {
-	    for (int j = 0; j < this.boardArray[i].length; j++) {
-		this.boardArray[i][j] = constellation.getBoard().boardArray[7 - i][7 - j];
+	for (int row = 0; row < this.boardArray.length; row++) {
+	    for (int col = 0; col < this.boardArray[row].length; col++) {
+		this.boardArray[row][col] = constellation.getBoard().boardArray[7 - row][7 - col];
 	    }
 	}
     }
@@ -61,8 +61,8 @@ public class Board {
 	
 	// Fill in all white pawns.
 	row = 1;
-	for (int j = 0; j < boardArray[row].length; j++) {
-	    this.boardArray[row][j] = ChessPieceContainer.getWhitePawn();
+	for (int col = 0; col < boardArray[row].length; col++) {
+	    this.boardArray[row][col] = ChessPieceContainer.getWhitePawn();
 	}
 	
 	// Fill in all other white pieces.
@@ -78,8 +78,8 @@ public class Board {
 	
 	// Fill in all black pawns.
 	row = 6;
-	for (int j = 0; j < boardArray[row].length; j++) {
-	    this.boardArray[row][j] = ChessPieceContainer.getBlackPawn();
+	for (int col = 0; col < boardArray[row].length; col++) {
+	    this.boardArray[row][col] = ChessPieceContainer.getBlackPawn();
 	}
 	
 	// Fill in all other black pieces.
