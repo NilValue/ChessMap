@@ -1,5 +1,6 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import core.Constellation;
@@ -7,7 +8,9 @@ import pieces.*;
 
 public class IdManager {
     
-    private final Hashtable<String, Constellation> constellationsMap = new Hashtable<String, Constellation>();;
+    private final Hashtable<String, Constellation> constellationsTable = new Hashtable<String, Constellation>();;
+    private final Hashtable<String, ArrayList<String>> followingConstellationsTable = new Hashtable<String, ArrayList<String>>();
+    private final Hashtable<String, ArrayList<String>> formerConstellationsTable = new Hashtable<String, ArrayList<String>>();
     
     // Variables that code pieces on board.
     private final String PWN = "P";
@@ -24,7 +27,9 @@ public class IdManager {
      * @param constellation
      */
     public void addConstellation(String id, Constellation constellation) {
-	this.constellationsMap.putIfAbsent(id, constellation);
+	this.constellationsTable.putIfAbsent(id, constellation);
+	this.followingConstellationsTable.putIfAbsent(id, constellation.getFollowingConstellations());
+	this.formerConstellationsTable.putIfAbsent(id, constellation.getFormerConstellations());
     }
     
     /**
@@ -34,7 +39,7 @@ public class IdManager {
      *         - null if there is no such object.
      */
     public Constellation getConstellation(String id) {
-	return this.constellationsMap.get(id);
+	return this.constellationsTable.get(id);
     }
     
     /**
@@ -77,9 +82,7 @@ public class IdManager {
 		    String color = convertColorToChar(boardArray[row][col].getColor());
 		    
 		    // 3. if you find a piece, add it's code to your ID.
-		    id += Integer.toString(row) + Integer.toString(col)
-			  + color
-			  + type;
+		    id += Integer.toString(row) + Integer.toString(col) + color + type;
 		}
 	    }
 	}
@@ -88,6 +91,23 @@ public class IdManager {
 	// + id);
 	
 	return id;
+    }
+    
+    /**
+     * Adds a relationship between two constellations.<br/>
+     * This means that the ID of the former constellation is added to the list
+     * of IDs of the following constellation and vice versa.<br/>
+     * These list have to be known to the constellation but should be attributes
+     * of the IdManager class and manager by the IdManager class<br/>
+     * 
+     * @param idFormerConstellation
+     *        - the ID of the former constellation
+     * @param idFollowingConstellation
+     *        - the ID of the following constellation
+     */
+    public void addRelationship(String idFormerConstellation, String idFollowingConstellation) {
+	// TODO method implementation
+	// TODO attributes to store the relationships within IdManager
     }
     
     /**

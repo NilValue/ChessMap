@@ -2,25 +2,15 @@ package core;
 
 import java.util.ArrayList;
 
-import pieces.ChessPiece;
 import util.Color;
 import util.IdManager;
 import util.Move;
 
 /**
  * "Core"-Element of ChessMap. <br/>
- * Contains a pointer to a chess board ({@link #board} which contains pointers
- * to all pieces in play and their positions.<br/>
- * Is able to create and instantiate all new constellations out of itself and
- * add the to its containing map. <br/>
- * Knows which constellations can be created out of it (
- * {@link #followingConstellations}).<br/>
- * <br/>
- * Two different constellations shall point to the same board if they share it.<br/>
- * Two constellations with the same board differ in:<br/>
- * - the color of the moving player ({@link #movingPlayer})<br/>
- * - the color of the player which is checkmate (@link {@link #checkmatePlayer})<br/>
- * - the list of the {@link #followingConstellations}
+ * Has two constructors, one for the very first constellation (
+ * {@link #Constellation(IdManager)}) and another for all following
+ * constellations ({@link #Constellation(Constellation)}).<br/>
  * 
  * @author Andy
  */
@@ -32,9 +22,10 @@ public class Constellation {
      * It represents the constellation at the start of a game of chess.<br/>
      * Therefore it does the following:<br/>
      * - {@link #complete} is set to {@code false} .<br/>
-     * - {link #movingPLayer} is set to {@code Color.WHITE}.<br/>
-     * - {link #board} will receive a new instance of the class {@code Board}
-     * using the default constructor.<br/>
+     * - {@link #movingPLayer} is set to {@code Color.WHITE}.<br/>
+     * - {@link #board} will receive a new instance of the class {@link Board}
+     * using the default constructor which will fill said board with the
+     * starting positions.<br/>
      * <br/>
      * <b>Important note</b>: After the constructor has finished the new
      * constellation must be added to the idManager<br/>
@@ -51,8 +42,7 @@ public class Constellation {
 	this.idManager = idManager;
 	
 	// Generate Id and set it within this constellation.
-	this.id = this.idManager.generateId(this.board.getBoardArray(),
-					    this.movingPlayer);
+	this.id = this.idManager.generateId(this.board.getBoardArray(), this.movingPlayer);
 	
 	this.calculateAllPossibleMoves();
     }
@@ -61,11 +51,22 @@ public class Constellation {
      * This constructor creates a new constellation based on an existing
      * constellation<br/>
      * <br/>
-     * <b>Important note</b>: After the constructor has finished two things have
-     * to be done:<br/>
+     * Note that the new constellation is a new object and that its
+     * instantiation shall have no side effects.<br/>
+     * Therefore, after the constructor has finished, the former constellation
+     * won't be updated and the new constellation has not been added to the
+     * idManager.<br/>
+     * <br/>
+     * <b>Important note</b>: After the constructor has finished three things
+     * have to be done:<br/>
      * 1.) The new constellation must be added to the idManager<br/>
      * 2.) The new constellation must be added to the list of following
-     * constellations of the former constellation.<br/>
+     * constellations of the former constellation (see
+     * {@link IdManager#addRelationship(String, String)}).<br/>
+     * 3.) The former constellation must be added to the list of former
+     * constellations of the new constellation (see
+     * {@link IdManager#addRelationship(String, String)}).<br/>
+     * 4.) The performed move must be removed from the former constellation.
      * 
      * @param formerConstellation
      *        : The constellation from which the new constellation is created
@@ -93,7 +94,7 @@ public class Constellation {
 	}
 	
 	// Generate a mirrored copy of the old board
-	this.board = new Board(formerConstellation);
+	this.board = new Board(formerConstellation.board);
 	
 	// Execute next logical move
 	this.executeNextMove(formerConstellation);
@@ -102,8 +103,7 @@ public class Constellation {
 	this.idManager = formerConstellation.idManager;
 	
 	// Generate Id and set it within this constellation
-	this.id = this.idManager.generateId(this.board.getBoardArray(),
-					    this.movingPlayer);
+	this.id = this.idManager.generateId(this.board.getBoardArray(), this.movingPlayer);
 	
 	this.calculateAllPossibleMoves();
     }
@@ -115,7 +115,7 @@ public class Constellation {
     private final Color movingPlayer;
     
     /**
-     * The idManager is initialized at the call of the standard constructor
+     * The idManager is initialized before calling the standard constructor
      * which is only to be called once per ChessMap.<br/>
      * All idManager identifiers of all constellations of one ChessMap point to
      * the same IdManager object.<br/>
@@ -144,10 +144,11 @@ public class Constellation {
     
     /**
      * Every finished constellation shall know which constellations can follow
-     * out of it.<br/>
+     * out of it and out of which constellations itself can follow.<br/>
      * Furthermore it shall be able to retrieve those out of it IdManager<br/>
      */
-    private final ArrayList<Constellation> followingConstellations = new ArrayList<Constellation>();
+    private final ArrayList<String> followingConstellations = new ArrayList<String>(),
+	    formerConstellations = new ArrayList<String>();
     
     /**
      * The moves that still have to be executed in order to get all
@@ -168,30 +169,72 @@ public class Constellation {
      * 
      * @throws Exception
      */
-    private final void executeNextMove(Constellation formerConstellation) {
-	// TODO Handle errors that could occur while executing the moving!
+    private final void executeNextMove(Constellation formerConstellation) throws Exception {
+	if (formerConstellation.moves.isEmpty()) {
+	    throw new Exception("Trying to execute a move that does not exist!");
+	}
+	
+	int[] fromPos = formerConstellation.moves.get(0).getFromPos();
+	int[] toPos = formerConstellation.moves.get(0).getNextDestination();
+	
+	// TODO Handle errors that could occur while executing the move
 	// TODO method implementation
     }
     
     /**
-     * Calculates all possible moves on this constellation and adds them to the
+     * Calculates all possible moves of this constellation and adds them to the
      * ArrayList moves.<br/>
      */
     private final void calculateAllPossibleMoves() {
+	// TODO method implementation
+    }
+    
+    // TODO element comment
+    public final void removeMove(int fromPosRow, int fromPosCol, int destinationRow, int destinationCol) {
+	int[] fromPos = { fromPosRow, fromPosCol };
+	int[] destination = { destinationRow, destinationCol };
+	
+	this.removeMove(fromPos, destination);
+    }
+    
+    /**
+     * Removes the next logical move which should have been retrieved first<br/>
+     */
+    public final void removeMove(int[] fromPos, int[] destination) {
+	if ((fromPos.length != 2) || (destination.length != 2)) {
+	    throw new IllegalArgumentException("Wrong parameters on removal of a move");
+	}
 	
 	// TODO method implementation
     }
     
+    /**
+     * @return {@link #id}
+     */
     public String getId() {
 	return this.id;
     }
     
-    public Board getBoard() {
-	return this.board;
-    }
-    
+    /**
+     * @return {@link #movingPlayer}
+     */
     public Color getMovingPlayer() {
 	return this.movingPlayer;
     }
     
+    public boolean isComplete() {
+	return this.complete;
+    }
+    
+    public void markAsComplete() {
+	this.complete = true;
+    }
+    
+    public ArrayList<String> getFollowingConstellations() {
+	return this.followingConstellations;
+    }
+    
+    public ArrayList<String> getFormerConstellations() {
+	return this.formerConstellations;
+    }
 }

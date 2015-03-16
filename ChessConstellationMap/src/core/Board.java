@@ -35,11 +35,11 @@ public class Board {
      * @param constellation
      *        - The former constellation.
      */
-    public Board(Constellation constellation) {
+    public Board(Board formerBoard) {
 	// Copy the old board and mirror it
 	for (int row = 0; row < this.boardArray.length; row++) {
 	    for (int col = 0; col < this.boardArray[row].length; col++) {
-		this.boardArray[row][col] = constellation.getBoard().boardArray[7 - row][7 - col];
+		this.boardArray[row][col] = formerBoard.boardArray[7 - row][7 - col];
 	    }
 	}
     }
