@@ -145,7 +145,8 @@ public class Constellation {
     /**
      * Every finished constellation shall know which constellations can follow
      * out of it and out of which constellations itself can follow.<br/>
-     * Furthermore it shall be able to retrieve those out of it IdManager<br/>
+     * The idManager is able to add these to the corresponding Hashtables
+     * {@link IdManager.#}<br/>
      */
     private final ArrayList<String> followingConstellations = new ArrayList<String>(),
 	    formerConstellations = new ArrayList<String>();
