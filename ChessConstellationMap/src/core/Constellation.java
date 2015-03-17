@@ -27,8 +27,10 @@ public class Constellation {
      * using the default constructor which will fill said board with the
      * starting positions.<br/>
      * <br/>
-     * <b>Important note</b>: After the constructor has finished the new
-     * constellation must be added to the idManager<br/>
+     * <b>Important note</b>:After the constructor has finished some tasks must
+     * be executed in the following order:<br/>
+     * 1.) The method {@link #calculateAllPossibleMoves()} must be called!<br/>
+     * 2.) The new constellation must be added to the idManager<br/>
      */
     public Constellation(IdManager idManager) {
 	
@@ -44,7 +46,6 @@ public class Constellation {
 	// Generate Id and set it within this constellation.
 	this.id = this.idManager.generateId(this.board.getBoardArray(), this.movingPlayer);
 	
-	this.calculateAllPossibleMoves();
     }
     
     /**
@@ -57,16 +58,17 @@ public class Constellation {
      * won't be updated and the new constellation has not been added to the
      * idManager.<br/>
      * <br/>
-     * <b>Important note</b>: After the constructor has finished three things
-     * have to be done:<br/>
-     * 1.) The new constellation must be added to the idManager<br/>
-     * 2.) The new constellation must be added to the list of following
+     * <b>Important note</b>: After the constructor has finished some tasks must
+     * be executed in the following order:<br/>
+     * 1.) The method {@link #calculateAllPossibleMoves()} must be called!<br/>
+     * 2.) The new constellation must be added to the idManager<br/>
+     * 3.) The new constellation must be added to the list of following
      * constellations of the former constellation (see
      * {@link IdManager#addRelationship(String, String)}).<br/>
-     * 3.) The former constellation must be added to the list of former
+     * 4.) The former constellation must be added to the list of former
      * constellations of the new constellation (see
      * {@link IdManager#addRelationship(String, String)}).<br/>
-     * 4.) The performed move must be removed from the former constellation.
+     * 5.) The performed move must be removed from the former constellation.
      * 
      * @param formerConstellation
      *        : The constellation from which the new constellation is created
@@ -105,7 +107,6 @@ public class Constellation {
 	// Generate Id and set it within this constellation
 	this.id = this.idManager.generateId(this.board.getBoardArray(), this.movingPlayer);
 	
-	this.calculateAllPossibleMoves();
     }
     
     /**
@@ -186,11 +187,18 @@ public class Constellation {
      * Calculates all possible moves of this constellation and adds them to the
      * ArrayList moves.<br/>
      */
-    private final void calculateAllPossibleMoves() {
+    public final void calculateAllPossibleMoves() {
 	// TODO method implementation
     }
     
-    // TODO element comment
+    /**
+     * Calls {@link #removeMove(int[], int[])}.
+     * 
+     * @param fromPosRow
+     * @param fromPosCol
+     * @param destinationRow
+     * @param destinationCol
+     */
     public final void removeMove(int fromPosRow, int fromPosCol, int destinationRow, int destinationCol) {
 	int[] fromPos = { fromPosRow, fromPosCol };
 	int[] destination = { destinationRow, destinationCol };
@@ -199,11 +207,19 @@ public class Constellation {
     }
     
     /**
-     * Removes the next logical move which should have been retrieved first<br/>
+     * Removes the next logical move which should have been retrieved first.
+     * Therefore it has to be transferred to the method first.<br/>
      */
     public final void removeMove(int[] fromPos, int[] destination) {
 	if ((fromPos.length != 2) || (destination.length != 2)) {
 	    throw new IllegalArgumentException("Wrong parameters on removal of a move");
+	}
+	
+	if (moves.get(0).getFromPos()[0] == fromPos[0]
+	    && moves.get(0).getFromPos()[1] == fromPos[1]
+	    && moves.get(0).getNextDestination()[0] == destination[0]
+	    && moves.get(0).getNextDestination()[1] == destination[1]) {
+	    
 	}
 	
 	// TODO method implementation
@@ -227,7 +243,11 @@ public class Constellation {
 	return this.complete;
     }
     
+    /**
+     * <b>Warning: Irreversible!</b>
+     */
     public void markAsComplete() {
+	this.moves = null;
 	this.complete = true;
     }
     
@@ -237,5 +257,9 @@ public class Constellation {
     
     public ArrayList<String> getFormerConstellations() {
 	return this.formerConstellations;
+    }
+    
+    public Board getBoard() {
+	return this.board;
     }
 }
