@@ -28,7 +28,8 @@ public class Rook extends ChessPiece {
 	 * 5. check for available moves to the east with for-loop (same pattern as 3.)
 	 * 6. check for available moves to the west with for-loop (same pattern as 3.)
 	 * 7. TODO add SPECIAL MOVES
-	 * 8. return rookMoves as complete Move-Object with all available moves from defined position 
+	 * 8. return rookMoves as complete Move-Object with all available moves from defined position
+	 * TODO add different algorithm when king is checked!
 	 */
 	@Override
 	public Move getPossibleMoves(Constellation constellation, int fromPosRow,
